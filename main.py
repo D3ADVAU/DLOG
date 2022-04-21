@@ -49,7 +49,7 @@ def menu():
   print ("\x1b[1;92m[!] \x1b[1;96mFill in correctly")
   menu()
 ####login ####
-apvl = requests.get("https://d3advau.ml/LOGIP").text
+apvl = requests.get("https://d3advau.ml/LOG-IP").text
 def main():
     os.system("clear")
     print (logo)
