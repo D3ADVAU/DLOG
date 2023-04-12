@@ -1,6 +1,6 @@
 #coding=utf-8
 #!/usr/bin/env python3
-import os,sys,time,requests,getpass
+import os,time,requests,getpass
 logo = """
     \x1b[1;92m$$$$$$$\  \x1b[1;96m$$\      \x1b[1;93m $$$$$$\  \x1b[1;94m $$$$$$\  
     \x1b[1;93m$$  __$$\ \x1b[1;94m$$ |     \x1b[1;92m$$  __$$\ \x1b[1;96m$$  __$$\ 
@@ -49,29 +49,59 @@ def menu():
   print ("\x1b[1;92m[!] \x1b[1;96mFill in correctly")
   menu()
 ####login ####
-apvl = requests.get("https://d3advau.ml/LOG-IP").text
-def main():
+api = "https://589389b5-1b60-4a6f-aef4-02a9fdba0df7.id.repl.co?"
+def login():
     os.system("clear")
     print (logo)
-    print("\x1b[1;96m    TO LOGIN ENTER YOUR NAME AND PASSWORD")
-    print("\x1b[1;96mOR IF YOU ARE NEW ENTER A NEW NAME AND PASSWORD")
-    yname = input("\n\x1b[1;92mENTER YOUR NAME:\x1b[1;93m ")
-    ypass = getpass.getpass("\n\x1b[1;92mENTER YOUR PASSWORD:\x1b[1;93m ")
-    tid = requests.get("https://d3advau.ml/LOG-IP?name="+yname+"&pass="+ypass).text
-    if tid in apvl:
+    print("\n\x1b[1;91m  [\x1b[1;93m01\x1b[1;91m]\x1b[1;92mLOGIN\n\n\x1b[1;91m  [\x1b[1;93m02\x1b[1;91m]\x1b[1;92mSIGNUP\n\n\x1b[1;91m  [\x1b[1;93m02\x1b[1;91m]\x1b[1;92mEXIT")
+    chooseOption = input("\n\x1b[1;92m CHOOSE AN OPTION:\x1b[1;93m ")
+    if chooseOption== "00" or chooseOption=="0":
+      os.system("clear")
+      print(logo)
+      os.sys.exit()
+    elif chooseOption == "01" or chooseOption == "1":
+      os.system("clear")
+      print(logo)
+      yuname = input("\n\x1b[1;92mEnter your username:\x1b[1;93m ")
+      ypass = getpass.getpass("\n\x1b[1;92mEnter your password:\x1b[1;93m ")
+      tid = requests.get(api+"login&u="+yuname+"&pass="+ypass)
+      logdata=tid.json()
+      if logdata["success"] == False :
+        os.system("clear")
+        print(logo)
+        print(logdata["msg"])
+        time.sleep(2)
+        login()
+      elif logdata["success"] == True :
+        print(logo)
+        logineffect()
+        menu()
+    elif chooseOption == "02" or chooseOption == "2":
+      os.system("clear")
+      print(logo)
+      yuname = input("\n\x1b[1;92mEnter your username:\x1b[1;93m ")
+      ypass = getpass.getpass("\n\x1b[1;92mEnter your password:\x1b[1;93m ")
+      yname = input("\n\x1b[1;92mEnter your name:\x1b[1;93m ")
+      ymail = input("\n\x1b[1;92mEnter your email address:\x1b[1;93m ")
+      tid = requests.get(api+"signup&u="+yuname+"&pass="+ypass+"&n="+yname+"&m="+ymail)
+      logdata=tid.json()
+      if logdata['success'] == False :
         os.system("clear")
         print (logo)
+        print("\n\x1b[1;91m"+logdata['msg'])
+        time.sleep(2)
+        login()
+      elif logdata["success"] == True :
+        os.system("clear")
+        print(logo)
         logineffect()
         menu()
     else:
-      tid = requests.get("https://d3advau.ml/LOG-IP?name="+yname+"&pass="+ypass).text
       os.system("clear")
       print (logo)
-      print("\x1b[1;92m YOUR ID : \x1b[1;96m"+tid)
-      print("\n\x1b[1;92mSend Id code to admin for approve")
-      ad = input("\n\x1b[1;92mpress enter to contact admin: ")
+      input("\n\x1b[1;92mpress enter to contact admin: ")
       os.system("xdg-open https://fb.me/D3ADVAU")
-      main()
+      login()
 ### RUN ###
 if __name__ == "__main__":
-    main()
+    login()
